@@ -23,7 +23,6 @@ services:
       - omego_network
     volumes:
       - ./:/app
-#      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
   db:
     image: postgres:15
@@ -45,7 +44,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8585"
+      - "8585:8080"
     networks:
       - omego_network
     links:
