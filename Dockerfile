@@ -53,13 +53,12 @@ RUN mkdir -p /var/log/supervisor
 
 WORKDIR /app
 
+# Copy existing application directory permissions
+COPY . .
+
 RUN echo 'pm.max_children = 30' >> /usr/local/etc/php-fpm.d/zz-docker.conf
 
 RUN docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install opcache
-
-RUN adduser -D shaho
-RUN chown -R shaho:shaho .
-USER shaho
 
 CMD ["php-fpm"]
