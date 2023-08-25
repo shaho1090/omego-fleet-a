@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\old\ApiToken;
+
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -34,13 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'reviewer', targetEntity: Review::class)]
     private Collection $reviews;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: ApiToken::class, orphanRemoval: true)]
-    private Collection $apiTokens;
-
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
-        $this->apiTokens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,36 +133,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($review->getReviewer() === $this) {
                 $review->setReviewer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ApiToken>
-     */
-    public function getApiTokens(): Collection
-    {
-        return $this->apiTokens;
-    }
-
-    public function addApiToken(ApiToken $apiToken): static
-    {
-        if (!$this->apiTokens->contains($apiToken)) {
-            $this->apiTokens->add($apiToken);
-            $apiToken->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApiToken(ApiToken $apiToken): static
-    {
-        if ($this->apiTokens->removeElement($apiToken)) {
-            // set the owning side to null (unless already changed)
-            if ($apiToken->getUserId() === $this) {
-                $apiToken->setUserId(null);
             }
         }
 
