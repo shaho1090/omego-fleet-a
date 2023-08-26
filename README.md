@@ -1,7 +1,7 @@
 # omego-fleet-a
 
 ## Follow these steps:
-- after cloning the repository go to the project directory and run this command:
+After cloning the repository, go to the project directory and run this command:
 ````
 docker compose up -d
 ````
@@ -17,7 +17,11 @@ Run Migration:
 ````
 php bin/console doctrine:migrations:migrate
 ````
-Go to following address:
+Genretate new jWT keypair files:
+````
+php bin/console lexik:jwt:generate-keypair
+````
+Go to the following address in your favorite browser:
 ````
 localhost:8100/api/docs
 ````
