@@ -31,7 +31,7 @@ Register new user and get token using:
 ````
 Enter the token you have gotten in the ***Authorize*** button with this pattern:
 ````
-Bearer **token**
+Bearer ***token***
 ````
 Now you can use the rest of apis 
 
