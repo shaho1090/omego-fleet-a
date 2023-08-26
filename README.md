@@ -29,9 +29,9 @@ Register new user and get token using:
 ````
 /api/registration
 ````
-Enter the token you have gotten in the ***Authorize*** button with this pattern:
+Enter the token you have gotten in the **Authorize** button with this pattern:
 ````
-Bearer ***token***
+Bearer token
 ````
 Now you can use the rest of apis 
 
