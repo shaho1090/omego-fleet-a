@@ -7,6 +7,7 @@ use ApiPlatform\Action\PlaceholderAction;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Controller\UserRegistrationController;
 use App\Repository\UserRepository;
@@ -18,6 +19,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 #[ApiResource(operations: [
     new Post(
         uriTemplate: '/registration',
@@ -65,7 +72,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reviews = new ArrayCollection();
     }
 
-    #[ApiProperty(readable: false)]
     public function getId(): ?int
     {
         return $this->id;
@@ -88,7 +94,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    #[ApiProperty(readable: false)]
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
@@ -141,7 +146,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Review>
      */
-    #[ApiProperty(readable: false)]
     public function getReviews(): Collection
     {
         return $this->reviews;

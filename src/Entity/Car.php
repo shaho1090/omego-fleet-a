@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Odm\Filter\RangeFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Link;
@@ -11,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource]
+#[ApiFilter(RangeFilter::class, properties: ['reviews.star_rating'])]
 #[ORM\Entity(repositoryClass: CarRepository::class)]
 class Car
 {
@@ -29,7 +32,6 @@ class Car
     private ?string $color = null;
 
     #[Link(toProperty: 'car')]
-    #[ApiProperty(writable: false)]
     #[ORM\OneToMany(mappedBy: 'car', targetEntity: Review::class)]
     private Collection $reviews;
 
