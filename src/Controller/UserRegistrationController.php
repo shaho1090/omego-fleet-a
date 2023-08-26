@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[AsController]
-class RegistrationController extends AbstractController
+class UserRegistrationController extends AbstractController
 {
     public function __construct(
         private readonly UserRepository $userRepository,
