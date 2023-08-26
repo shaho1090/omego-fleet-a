@@ -3,6 +3,12 @@
 namespace App\Entity;
 
 
+use ApiPlatform\Action\PlaceholderAction;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use App\Controller\UserRegistrationController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +18,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ApiResource(operations: [
+    new Post(
+        uriTemplate: '/registration',
+        controller: PlaceholderAction::class,
+        name: 'registration'
+    )
+])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,9 +32,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'string',
+        ],
+
+    )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
+    #[ApiProperty(readable: false, writable: false)]
     #[ORM\Column]
     private array $roles = [];
 
@@ -29,8 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[ApiProperty(
+        readable: false, openapiContext: [
+            'type' => 'string',
+        ]
+    )]
     private ?string $password = null;
 
+    #[ApiProperty(readable: false, writable: false)]
     #[ORM\OneToMany(mappedBy: 'reviewer', targetEntity: Review::class)]
     private Collection $reviews;
 
@@ -39,6 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reviews = new ArrayCollection();
     }
 
+    #[ApiProperty(readable: false)]
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
+    #[ApiProperty(readable: false)]
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
@@ -78,6 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    #[ApiProperty(writable: false)]
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -112,6 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Review>
      */
+    #[ApiProperty(readable: false)]
     public function getReviews(): Collection
     {
         return $this->reviews;

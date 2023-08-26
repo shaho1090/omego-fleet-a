@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Link;
 use App\Repository\CarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource]
 #[ORM\Entity(repositoryClass: CarRepository::class)]
 class Car
 {
@@ -24,6 +28,8 @@ class Car
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
+    #[Link(toProperty: 'car')]
+    #[ApiProperty(writable: false)]
     #[ORM\OneToMany(mappedBy: 'car', targetEntity: Review::class)]
     private Collection $reviews;
 
@@ -80,6 +86,7 @@ class Car
     {
         return $this->reviews;
     }
+
 
     public function addReview(Review $review): static
     {

@@ -2,10 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    uriTemplate: '/cars/{CarId}/reviews',
+    operations: [ new GetCollection() ],
+    uriVariables: [
+        'CarId' => new Link(toProperty: 'car', fromClass: Car::class),
+    ]
+)]
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
 {
@@ -23,6 +33,7 @@ class Review
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $reviewer = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
