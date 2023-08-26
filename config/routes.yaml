@@ -6,9 +6,9 @@ controllers:
     prefix: '/api'
     trailing_slash_on_root: false
 
-#api_login_check:
-#    path: /api/login_check
+api_login_check:
+    path: /api/login_check
 
-auth:
-    path: /auth
-    methods: ['POST']
+#auth:
+#    path: /auth
+#    methods: ['POST']
