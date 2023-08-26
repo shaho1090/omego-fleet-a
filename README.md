@@ -17,7 +17,7 @@ Run Migration:
 ````
 php bin/console doctrine:migrations:migrate
 ````
-Genretate new jWT keypair files:
+Genretate new JWT keypair files:
 ````
 php bin/console lexik:jwt:generate-keypair
 ````
